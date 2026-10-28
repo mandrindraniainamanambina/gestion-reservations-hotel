@@ -1,0 +1,20 @@
+# PostgreSQL pour le développement : docker compose up -d
+# Les identifiants sont lus dans backend/.env (copié depuis backend/.env.example)
+services:
+  db:
+    image: postgres:16
+    container_name: hotel_postgres
+    restart: unless-stopped
+    env_file:
+      - backend/.env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-hotel_db}
+      POSTGRES_USER: ${POSTGRES_USER:-hotel_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - hotel_pgdata:/var/lib/postgresql/data
+
+volumes:
+  hotel_pgdata:
